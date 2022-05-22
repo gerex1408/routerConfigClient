@@ -12,6 +12,7 @@ const darkTheme = createTheme({ palette: { mode: 'dark' } });
 
 function IpTables() {
   const [entrades,setEntrades]=useState([])
+  const [toggle,setToggle]=useState(false)
 
   useEffect(()=>{
     Axios.get("/ipTables",{
@@ -21,10 +22,10 @@ function IpTables() {
     }).then(res=>{
       setEntrades(res.data.entrades)
     })
-  },[])
+  },[toggle])
 
   const removeEntry=async()=>{
-    /*try{
+    try{
         await Axios.delete("/ipTables",{
         headers:{
             "x-access-token": Auth.getToken()
@@ -35,14 +36,14 @@ function IpTables() {
         title: 'Configuració enviada',
         text: "El router s'ha configurat correctament!",
         })
-        setHasEntry(false)
+        setToggle(!toggle)
     }catch(err){
         Swal.fire({
         icon: 'error',
         title: 'Error innesperat del servidor',
         text: 'El servidor no ha fet el que havia de fer... molt malament!',
         })
-    }*/
+    }
 
   }
 
@@ -53,7 +54,7 @@ function IpTables() {
       <h2>Configuració de les IP tables</h2>
       <div className='FormContainer'>
         {
-          entrades.length>0&&(
+          entrades[0]!==""&&(
             <div>
               <ThemeProvider theme={darkTheme}>
                 <TableContainer component={Paper} >
@@ -69,7 +70,7 @@ function IpTables() {
               </div>
           )
         }
-        <EntradaTaula/>
+        <EntradaTaula changeToggle={setToggle} toggle={toggle} />
       </div>
     </div>
   )

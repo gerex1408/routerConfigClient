@@ -1,7 +1,12 @@
 import {React,useState} from 'react'
 import {FormControl,InputLabel,OutlinedInput,Select,MenuItem,Button,TextField} from "@mui/material"
+import Swal from 'sweetalert2'
+import Axios from "axios"
+import AuthService from '../Services/AuthService'
 
-function EntradaTaula() {
+export const Auth = new AuthService();
+
+function EntradaTaula(props) {
     const [origen,setOrigen] = useState("")
     const [desti,setDesti] = useState("")
     const [interficie, setInterficie] = useState("")        
@@ -17,7 +22,7 @@ function EntradaTaula() {
     }
 
     const postEntry= async ()=>{
-        /*if(origen!==desti){
+        if(origen!==desti){
           const body={
             origen:origen,
             desti:desti,
@@ -34,7 +39,7 @@ function EntradaTaula() {
               title: 'Configuració enviada',
               text: "El router s'ha configurat correctament!",
             })
-            setHasEntry(true)
+            props.changeToggle(!props.toggle)
           }catch(err){
             Swal.fire({
               icon: 'error',
@@ -49,7 +54,7 @@ function EntradaTaula() {
             title: "Error en els camps",
             text: "L'origen i el destí no poden ser els mateixos",
           })
-        }*/
+        }
         
     } 
 
